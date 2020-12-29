@@ -2,6 +2,7 @@
 package org.owasp.webgoat.lessons;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.security.MessageDigest;
@@ -17,7 +18,6 @@ import org.apache.ecs.html.TD;
 import org.apache.ecs.html.TR;
 import org.apache.ecs.html.Table;
 import org.owasp.webgoat.session.WebSession;
-import sun.misc.BASE64Encoder;
 
 
 /***************************************************************************************************
@@ -182,7 +182,7 @@ public class HttpOnly extends LessonAdapter
         String value = null;
         byte[] buffer = null;
         MessageDigest md = null;
-        BASE64Encoder encoder = new BASE64Encoder();
+        Base64.Encoder encoder = Base64.getEncoder();
 
         try
         {
@@ -190,7 +190,7 @@ public class HttpOnly extends LessonAdapter
             buffer = new Date().toString().getBytes();
 
             md.update(buffer);
-            value = encoder.encode(md.digest());
+            value = new String(encoder.encode(md.digest()));
             original = value;
 
         } catch (Exception e)
